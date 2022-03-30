@@ -22,7 +22,7 @@ function fixCase(string) {
 function starRating (num){
     let stars = '';
     for(let i = 1; i <= num; i++) {
-        stars += ''
+        stars += '⭐️'
     }
 }
 
