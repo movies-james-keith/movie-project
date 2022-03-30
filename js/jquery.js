@@ -76,26 +76,22 @@ function getMoviesDB(url) {
         .then(data => {
 
             console.log(data)
-            let html = '';
-            html += '<ul>'
 
             for (let i = 0; i < (data.length - 1); i++) {
-                let movieTitle = data[i].title;
-                let movieGenre = data[i].genre;
+                let movieTitle = fixCase(data[i].title);
+                let movieGenre = fixCase(data[i].genre);
                 let movieYear = data[i].year;
                 let moviePlot = data[i].plot;
-                let movieRating = data[i].rating;
+                let movieRating = starRating(data[i].rating);
                 if(data[i].title !== undefined) {
-                    html += '<li>' + fixCase(movieTitle) + '</li>';
-                    html += '<li>' + fixCase(movieGenre) + '</li>';
-                    html += '<li>' + movieYear + '</li>';
-                    html += '<li>' + moviePlot + '</li>';
-                    html += '<li>' + starRating(movieRating) + '</li>';
-
+                    $('#moviesList').append(`
+                    <li> ${movieTitle} </li>
+                    <li> ${movieGenre} </li>
+                    <li> ${movieYear} </li>
+                    <li> ${moviePlot} </li>
+                    <li> ${movieRating} </li>
+                    `)
                 }
             }
-            html += '<ul>';
-            $('#moviesList').html(html);
-
         });
 }
