@@ -1,6 +1,7 @@
 "use strict"
 
 let moviesUrl = "https://receptive-different-edam.glitch.me/movies";
+let id = 8;
 
 getMoviesDB(moviesUrl);
 // fixCase('tenet tenet');
@@ -9,6 +10,8 @@ getMoviesDB(moviesUrl);
 $('#submit').click(function () {
    addMovie();
 });
+
+deleteMovie(id);
 
 function fixCase(string) {
         if (typeof (string) === 'string' && string !== '') {
@@ -32,8 +35,22 @@ function starRating (num){
     return stars;
 }
 
-
-
+function deleteMovie(id) {
+    fetch(moviesUrl)
+        .then(response => response.json())
+        .then(data => {
+            for (let i = 0; i <= (data.length - 1); i++) {
+                if (data[i].id === id) {
+                    fetch(moviesUrl + data[i].id, {
+                        method: 'DELETE',
+                    })
+                        .then(res => res.text()) // or res.json()
+                        .then(res => console.log(res))
+                }
+            }
+            console.log(data);
+        })
+}
 
 function addMovie() {
     let data = { title:  $('#input-title').val(),
