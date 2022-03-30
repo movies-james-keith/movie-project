@@ -4,7 +4,11 @@ let moviesUrl = "https://receptive-different-edam.glitch.me/movies";
 
 getMoviesDB(moviesUrl);
 // fixCase('tenet tenet');
-addMovie(moviesUrl);
+// addMovie();
+
+$('#submit').click(function () {
+   addMovie();
+});
 
 function fixCase(string) {
         if (typeof (string) === 'string' && string !== '') {
@@ -22,18 +26,21 @@ function fixCase(string) {
 
 function starRating (num){
     let stars = '';
-    for(let i = 1; i <= num; i++) {
+    for(let i = 1; i <= 5; i++) {
         stars += '⭐️';
     }
     return stars;
 }
 
+
+
+
 function addMovie() {
-    let data = { title:  $('#input-title').value,
-        genre:  $('#input-genre').value,
-        year:   $('#input-year').value,
-        plot:   $('#input-plot').value,
-        rating: $('#input-rating').value
+    let data = { title:  $('#input-title').val(),
+        genre:  $('#input-genre').val(),
+        year:   $('#input-year').val(),
+        plot:   $('#input-plot').val(),
+        rating: $('#input-rating').val()
     };
     fetch(moviesUrl, {
         method: 'POST', // or 'PUT'
