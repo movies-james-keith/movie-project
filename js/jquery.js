@@ -4,6 +4,7 @@ let moviesUrl = "https://receptive-different-edam.glitch.me/movies";
 
 getMoviesDB(moviesUrl);
 // fixCase('tenet tenet');
+addMovie(moviesUrl);
 
 function fixCase(string) {
         if (typeof (string) === 'string' && string !== '') {
@@ -22,8 +23,32 @@ function fixCase(string) {
 function starRating (num){
     let stars = '';
     for(let i = 1; i <= num; i++) {
-        stars += '⭐️'
+        stars += '⭐️';
     }
+    return stars;
+}
+
+function addMovie() {
+    let data = { title:  $('#input-title').value,
+        genre:  $('#input-genre').value,
+        year:   $('#input-year').value,
+        plot:   $('#input-plot').value,
+        rating: $('#input-rating').value
+    };
+    fetch(moviesUrl, {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 }
 
 
@@ -48,7 +73,7 @@ function getMoviesDB(url) {
                     html += '<li>' + fixCase(movieGenre) + '</li>';
                     html += '<li>' + movieYear + '</li>';
                     html += '<li>' + moviePlot + '</li>';
-                    html += '<li>' + movieRating + '</li>';
+                    html += '<li>' + starRating(movieRating) + '</li>';
 
                 }
             }
