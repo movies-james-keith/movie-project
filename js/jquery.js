@@ -78,9 +78,7 @@ function createDropdown() {
     fetch(moviesUrl)
         .then(response => response.json())
         .then(data => {
-
-            console.log(data)
-
+            // console.log(data)
             for (let i = 0; i < (data.length - 1); i++) {
                 let movieTitle = fixCase(data[i].title);
                 let movieGenre = fixCase(data[i].genre);
@@ -88,8 +86,8 @@ function createDropdown() {
                 let moviePlot = data[i].plot;
                 let movieRating = starRating(data[i].rating);
                 if(data[i].title !== undefined) {
-                    $('#select-movie').append(`
-                    <select> ${movieTitle} </select>
+                    $('#selectMovie').append(`
+                    <li><a class="dropdown-item" href="#">${movieTitle}</a></li>
                     `)
                 }
             }
