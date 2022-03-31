@@ -7,6 +7,8 @@ getMoviesDB(moviesUrl);
 // fixCase('tenet tenet');
 // addMovie();
 
+createDropdown();
+
 $('#add-submit').click(function () {
    addMovie();
 });
@@ -20,7 +22,14 @@ $('#edit-submit').click(function () {
     editMovie();
 });
 
-createDropdown();
+$('#select-movie').change(function(){
+    let title = $(this).val()
+    populateEditForm(title);
+});
+
+
+
+
 
 function fixCase(string) {
         if (typeof (string) === 'string' && string !== '') {
@@ -72,6 +81,7 @@ function addMovie() {
         .catch((error) => {
             console.error('Error:', error);
         });
+    createDropdown();
 }
 
 function createDropdown() {
@@ -81,16 +91,38 @@ function createDropdown() {
 
             console.log(data)
 
-            for (let i = 0; i < (data.length - 1); i++) {
-                let movieTitle = fixCase(data[i].title);
-                let movieGenre = fixCase(data[i].genre);
+            for (let i = 0; i < (data.length); i++) {
+                let movieTitle = data[i].title;
+                let movieGenre = data[i].genre;
                 let movieYear = data[i].year;
                 let moviePlot = data[i].plot;
                 let movieRating = starRating(data[i].rating);
                 if(data[i].title !== undefined) {
                     $('#select-movie').append(`
-                    <select> ${movieTitle} </select>
+                    <option> ${movieTitle} </option>
                     `)
+                }
+            }
+        });
+}
+
+function populateEditForm(title) {
+    fetch(moviesUrl)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            for (let i = 0; i < (data.length); i++) {
+                let movieTitle = fixCase(data[i].title);
+                let movieGenre = fixCase(data[i].genre);
+                let movieYear = data[i].year;
+                let moviePlot = data[i].plot;
+                let movieRating = starRating(data[i].rating);
+                if(data[i].title === title) {
+                    $('#edit-title').val(`${movieTitle}`)
+                    $('#edit-genre').val(`${movieGenre}`)
+                    $('#edit-year').val(`${movieYear}`)
+                    $('#edit-plot').val(`${moviePlot}`)
+                    $('#edit-rating').val(`${movieRating}`)
                 }
             }
         });
@@ -128,7 +160,7 @@ function getMoviesDB(url) {
 
             console.log(data)
 
-            for (let i = 0; i < (data.length - 1); i++) {
+            for (let i = 0; i < (data.length); i++) {
                 let movieTitle = fixCase(data[i].title);
                 let movieGenre = fixCase(data[i].genre);
                 let movieYear = data[i].year;
