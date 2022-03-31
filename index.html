@@ -29,18 +29,32 @@
 <ul id="moviesList">
 </ul>
 
+<span>Add Movie</span>
 <form id="add-movie-form">
-    <input id='input-title'>
-    <input id='input-genre'>
-    <input id='input-year'>
-    <input id='input-plot'>
-    <input id='input-rating'>
-    <button id="submit" type="submit">Submit Me!</button>
+    <input id='add-title'>
+    <input id='add-genre'>
+    <input id='add-year'>
+    <input id='add-plot'>
+    <input id='add-rating'>
+    <button id="add-submit" type="submit">Add Me!</button>
 </form>
 
-<form>
-    <input id="delete-item">
+<span>Delete Movie</span>
+<form id="delete-form">
+    <input id="delete-input">
     <button id="delete-submit" type="submit">Delete Me!</button>
+</form>
+
+<span>Edit Movie</span>
+<form id="edit-movie-form">
+    <select id="select-movie">
+    </select>
+    <input id='edit-title'>
+    <input id='edit-genre'>
+    <input id='edit-year'>
+    <input id='edit-plot'>
+    <input id='edit-rating'>
+    <button id="edit-submit" type="submit">Edit Me!</button>
 </form>
 
 <script src="js/jquery.js"></script>

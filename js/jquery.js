@@ -1,4 +1,4 @@
-"use strict"
+
 
 let moviesUrl = "https://receptive-different-edam.glitch.me/movies";
 
@@ -7,7 +7,7 @@ getMoviesDB(moviesUrl);
 // fixCase('tenet tenet');
 // addMovie();
 
-$('#submit').click(function () {
+$('#add-submit').click(function () {
    addMovie();
 });
 
@@ -15,6 +15,12 @@ $('#delete-submit').click(function () {
     let item = $('#delete-item').val();
     deleteMovie(item);
 });
+
+$('#edit-submit').click(function () {
+    editMovie();
+});
+
+createDropdown();
 
 function fixCase(string) {
         if (typeof (string) === 'string' && string !== '') {
@@ -46,14 +52,59 @@ function deleteMovie(item) {
 }
 
 function addMovie() {
-    let data = { title:  $('#input-title').val(),
-        genre:  $('#input-genre').val(),
-        year:   $('#input-year').val(),
-        plot:   $('#input-plot').val(),
-        rating: $('#input-rating').val()
+    let data = { title:  $('#add-title').val(),
+        genre:  $('#add-genre').val(),
+        year:   $('#add-year').val(),
+        plot:   $('#add-plot').val(),
+        rating: $('#add-rating').val()
     };
     fetch(moviesUrl, {
         method: 'POST', // or 'PUT'
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+
+function createDropdown() {
+    fetch(moviesUrl)
+        .then(response => response.json())
+        .then(data => {
+
+            console.log(data)
+
+            for (let i = 0; i < (data.length - 1); i++) {
+                let movieTitle = fixCase(data[i].title);
+                let movieGenre = fixCase(data[i].genre);
+                let movieYear = data[i].year;
+                let moviePlot = data[i].plot;
+                let movieRating = starRating(data[i].rating);
+                if(data[i].title !== undefined) {
+                    $('#select-movie').append(`
+                    <select> ${movieTitle} </select>
+                    `)
+                }
+            }
+        });
+}
+
+function editMovie() {
+    let data = { title:  $('#edit-title').val(),
+        genre:  $('#edit-genre').val(),
+        year:   $('#edit-year').val(),
+        plot:   $('#edit-plot').val(),
+        rating: $('#edit-rating').val()
+    };
+    fetch(moviesUrl, {
+        method: 'PUT', // or 'PUT'
         headers: {
             'Content-Type': 'application/json',
         },
