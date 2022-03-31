@@ -24,40 +24,60 @@
     <!--Transition CSS Stylesheet-->
     <link rel="stylesheet" href="css/transition.min.css">
 </head>
+
 <body>
 
-<ul id="moviesList">
-</ul>
+<!-- Loader Div -->
+<div id="loader"></div>
 
-<span>Add Movie</span>
-<form id="add-movie-form">
-    <input id='add-title'>
-    <input id='add-genre'>
-    <input id='add-year'>
-    <input id='add-plot'>
-    <input id='add-rating'>
-    <button id="add-submit" type="submit">Add Me!</button>
-</form>
+    <!-- Content Div -->
+    <div id="content">
 
-<span>Delete Movie</span>
-<form id="delete-form">
-    <input id="delete-input">
-    <button id="delete-submit" type="submit">Delete Me!</button>
-</form>
+        <ul id="moviesList">
+        </ul>
 
-<span>Edit Movie</span>
-<form id="edit-movie-form">
-    <select id="select-movie">
-        <option>Select Movie</option>
-    </select>
-    <input id='edit-title' value="Title">
-    <input id='edit-genre' value="Genre">
-    <input id='edit-year' value="Year">
-    <input id='edit-plot' value="Plot">
-    <input id='edit-rating' value="Rating">
-    <button id="edit-submit" type="Submit">Edit Me!</button>
-</form>
+        <span>Add Movie</span>
+        <form id="add-movie-form">
+            <input id='add-title'>
+            <input id='add-genre'>
+            <input id='add-year'>
+            <input id='add-plot'>
+            <input id='add-rating'>
+            <button id="add-submit">Add Me!</button>
+        </form>
 
-<script src="js/jquery.js"></script>
+        <span>Delete Movie</span>
+        <form id="delete-form">
+            <input id="delete-input">
+            <button id="delete-submit">Delete Me!</button>
+        </form>
+
+        <span>Edit Movie</span>
+        <form id="edit-movie-form">
+            <select id="select-movie">
+                <option>Select Movie</option>
+            </select>
+            <input id='edit-title' value="title">
+            <input id='edit-genre' value="genre">
+            <input id='edit-year' value="year">
+            <input id='edit-plot' value="plot">
+            <input id='edit-rating' value="rating">
+            <button id="edit-submit">Edit Me!</button>
+        </form>
+
+</div>
+<!-- End of body-->
+
+<script>
+    let preloader = document.getElementById('loader');
+    function preLoaderHandler(){
+        preloader.style.display = 'none';
+    }
+</script>
+
+<script src="js/loader.js"></script>
+<script src="js/main.js"></script>
+
+
 </body>
 </html>

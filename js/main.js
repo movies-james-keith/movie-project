@@ -1,29 +1,37 @@
+"use strict"
 
 
 let moviesUrl = "https://receptive-different-edam.glitch.me/movies";
 
-
 getMoviesDB(moviesUrl);
-
 createDropdown();
 
-$('#add-submit').click(function () {
-    addMovie();
+
+
+
+$('#add-submit').click(function (e) {
+    e.preventDefault();
+   addMovie();
+
 });
 
-$('#delete-submit').click(function () {
-    let item = $('#delete-item').val();
+$('#delete-submit').click(function (e) {
+    e.preventDefault();
+    let item = $('#delete-input').val();
     deleteMovie(item);
 });
 
-$('#edit-submit').click(function () {
+$('#edit-submit').click(function (e) {
+    e.preventDefault();
     editMovie();
 });
 
-$('#select-movie').change(function(){
-    let title = $(this).val();
+$('#select-movie').change(function(e){
+    e.preventDefault();
+    let title = $(this).val()
     populateEditForm(title);
 });
+
 
 function fixCase(string) {
     if (typeof (string) === 'string' && string !== '') {
@@ -39,19 +47,31 @@ function fixCase(string) {
     }
 }
 
-function starRating (num){
+function starRating (num) {
     let stars = '';
-    for(let i = 1; i <= 5; i++) {
+    if (num == '1' || num == '2' || num == '3' || num == '4' || num == '5') {
+
+    for (let i = 1; i <= num; i++) {
         stars += '⭐️';
     }
+}
     return stars;
 }
 
 function deleteMovie(item) {
-    return fetch(moviesUrl + '/' + item, {
+
+    fetch(moviesUrl + '/' + item, {
         method: 'delete'
     })
         .then(response => response.json());
+        fetch(moviesUrl + '/' + item, {
+            method: 'delete'
+        })
+            // .then(response => response.json());
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                getMoviesDB()});
 }
 
 function addMovie() {
@@ -71,6 +91,7 @@ function addMovie() {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
+            getMoviesDB()
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -88,7 +109,7 @@ function createDropdown() {
             for (let i = 0; i < (data.length); i++) {
                 let movieTitle = data[i].title;
                 let movieId = data[i].id;
-                // console.log(movieId)
+
                 if(data[i].title !== undefined) {
                     $('#select-movie').append(`
                     <option> ${movieTitle} </option>                    
@@ -137,6 +158,7 @@ function editMovie() {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
+            getMoviesDB()
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -144,9 +166,9 @@ function editMovie() {
 }
 
 
-function getMoviesDB(url) {
+function getMoviesDB() {
 
-    fetch(url)
+    fetch(moviesUrl)
         .then(response => response.json())
         .then(data => {
 
