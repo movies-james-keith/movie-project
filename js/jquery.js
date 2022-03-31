@@ -21,7 +21,7 @@ $('#edit-submit').click(function () {
 });
 
 $('#select-movie').change(function(){
-    let title = $(this).val()
+    let title = $(this).val();
     populateEditForm(title);
 });
 
@@ -87,14 +87,16 @@ function createDropdown() {
 
             for (let i = 0; i < (data.length); i++) {
                 let movieTitle = data[i].title;
-                let movieGenre = data[i].genre;
-                let movieYear = data[i].year;
-                let moviePlot = data[i].plot;
-                let movieRating = starRating(data[i].rating);
+                let movieId = data[i].id;
+                // console.log(movieId)
                 if(data[i].title !== undefined) {
                     $('#select-movie').append(`
-                    <option> ${movieTitle} </option>
+                    <option> ${movieTitle} </option>                    
                     `)
+                    $('#select-movie option:last').attr('id', movieId)
+                    // console.log($('#select-movie option:last').);
+                    //
+                    // console.log('movieId should be above me')
                 }
             }
         });
