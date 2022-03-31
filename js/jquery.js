@@ -93,10 +93,6 @@ function createDropdown() {
                     $('#select-movie').append(`
                     <option> ${movieTitle} </option>                    
                     `)
-                    $('#select-movie option:last').attr('id', movieId)
-                    // console.log($('#select-movie option:last').);
-                    //
-                    // console.log('movieId should be above me')
                 }
             }
         });
