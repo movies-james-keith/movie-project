@@ -121,7 +121,8 @@ function createDropdown() {
             for (let i = 0; i < (data.length); i++) {
                 let movieTitle = data[i].title;
                 let movieId = data[i].id;
-                if(data[i].title !== undefined && typeof(data[i].title) !== 'object') {
+
+                if(movieTitle !== undefined && typeof(movieTitle) !== 'object') {
                     $('#select-movie').append(`
                     <option class="${movieTitle} newoption" id="${movieId}"> ${movieTitle} </option>                    
                     `)
@@ -224,7 +225,7 @@ function getMoviesDB() {
                 let movieId = data[i].id;
                 if(data[i].title !== undefined) {
                     $('#movieCard').append(`
-                    <div class="card text-center bg-primary text-light border-warning col-6">
+                    <div class="card text-center bg-primary text-light border-warning col-5 my-2">
                         <div class="card-body" id="${movieId}">
                             <h5 class="card-title"> ${movieTitle} </h5>
                             <p class="card-text"> ${movieGenre} </p>
