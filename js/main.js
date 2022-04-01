@@ -3,13 +3,16 @@
 
 let moviesUrl = "https://receptive-different-edam.glitch.me/movies";
 
-getMoviesDB();
+getMoviesDB(moviesUrl);
 createDropdown();
+
+
 
 
 $('#add-submit').click(function (e) {
     e.preventDefault();
    addMovie();
+
 });
 
 $('#delete-submit').click(function (e) {
@@ -35,19 +38,18 @@ $('#select-movie').change(function(e){
 });
 
 
-
 function fixCase(string) {
-        if (typeof (string) === 'string' && string !== '') {
-            let names = [];
-            let fixedNames = '';
-            names = string.split(" ");
-            for (let i = 0; i < names.length; i++) {
-                names.push(names[i].charAt(0).toUpperCase() + names[i].slice(1).toLowerCase());
-                fixedNames = fixedNames + names.pop() + ' ';
-            }
-            console.log(fixedNames);
-            return fixedNames;
+    if (typeof (string) === 'string' && string !== '') {
+        let names = [];
+        let fixedNames = '';
+        names = string.split(" ");
+        for (let i = 0; i < names.length; i++) {
+            names.push(names[i].charAt(0).toUpperCase() + names[i].slice(1).toLowerCase());
+            fixedNames = fixedNames + names.pop() + ' ';
         }
+        console.log(fixedNames);
+        return fixedNames;
+    }
 }
 
 function starRating (num) {
@@ -62,6 +64,11 @@ function starRating (num) {
 }
 
 function deleteMovie(item) {
+
+    fetch(moviesUrl + '/' + item, {
+        method: 'delete'
+    })
+        .then(response => response.json());
         fetch(moviesUrl + '/' + item, {
             method: 'delete'
         })
@@ -102,6 +109,7 @@ function addMovie() {
         .catch((error) => {
             console.error('Error:', error);
         });
+    createDropdown();
 }
 
 function createDropdown() {
@@ -113,9 +121,10 @@ function createDropdown() {
 
             for (let i = 0; i < (data.length); i++) {
                 let movieTitle = data[i].title;
+              
                 if(data[i].title !== undefined && typeof(data[i].title) !== 'object') {
                     $('#select-movie').append(`
-                    <option> ${movieTitle} </option>
+                    <option> ${movieTitle} </option>                    
                     `)
                 }
             }
