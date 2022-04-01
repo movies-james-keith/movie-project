@@ -21,3 +21,32 @@ html, body {
     overflow: visible;
     background: #fff url(/images/movie-loading.gif) no-repeat center center;
 }
+
+#logo {
+    height: 10vh;
+    width: 10vh;
+}
+
+.navbar-style {
+    background-color: #b1a7a6;
+    font-family: 'Red Hat Mono', monospace;
+    font-weight: 700;
+}
+
+.navbar-brand {
+    color: #660708 !important;
+}
+
+.nav-link {
+    color: #660708 !important;
+}
+
+.modal-content {
+    background-color: #d3d3d3 !important;
+    font-family: 'Red Hat Mono', monospace;
+    font-weight: 400;
+}
+
+.bg-primary {
+    background-color: #A4161A!important;
+}
