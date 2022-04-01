@@ -36,6 +36,12 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
+                <!-- Button trigger add delete Moviemodal -->
+                <li>
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#deleteMovieModal">
+                        Delete
+                    </button>
+                </li>
                 <li class="nav-item d-flex mx-5">
                     <!-- Button trigger add moviemodal -->
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addMovieModal">
@@ -117,6 +123,27 @@
     </div>
 </div>
 
+<!-- Delete Movie Modal -->
+<div class="modal fade" id="deleteMovieModal" tabindex="-1" aria-labelledby="deleteMovieModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteMovieModalLabel">Delete Movie</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <select id="delete-movie">
+                    <option>Select A Movie to Delete</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-dark" id="delete-submit" data-bs-dismiss="modal">Delete Movie</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div style="height: 100px"></div>
 
 <!-- Loader Div -->
@@ -140,11 +167,11 @@
 <!--            <button id="add-submit">Add Me!</button>-->
 <!--        </form>-->
 
-        <span>Delete Movie</span>
-        <form id="delete-form">
-            <input id="delete-input">
-            <button id="delete-submit">Delete Me!</button>
-        </form>
+<!--        <span>Delete Movie</span>-->
+<!--        <form id="delete-form">-->
+<!--            <input id="delete-input">-->
+<!--            <button id="delete-submit">Delete Me!</button>-->
+<!--        </form>-->
 
 <!--        <span>Edit Movie</span>-->
 <!--        <form id="edit-movie-form">-->
