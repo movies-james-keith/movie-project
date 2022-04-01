@@ -23,6 +23,11 @@ $('#edit-submit').click(function (e) {
     editMovie();
 });
 
+$('#clear-submit').click(function (e) {
+    e.preventDefault();
+    clearMoviesDB();
+});
+
 $('#select-movie').change(function(e){
     e.preventDefault();
     let title = $(this).val()
@@ -64,7 +69,11 @@ function deleteMovie(item) {
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
-                getMoviesDB()});
+                clearMoviesDB();
+                clearFormValues();
+                getMoviesDB()
+                clearDropDown()
+                createDropdown();});
 }
 
 function addMovie() {
@@ -84,7 +93,11 @@ function addMovie() {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
-            getMoviesDB()
+            clearMoviesDB();
+            clearFormValues();
+            getMoviesDB();
+            clearDropDown()
+            createDropdown();
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -100,8 +113,7 @@ function createDropdown() {
 
             for (let i = 0; i < (data.length); i++) {
                 let movieTitle = data[i].title;
-                let movieId = data[i].id;
-                if(data[i].title !== undefined) {
+                if(data[i].title !== undefined && typeof(data[i].title) !== 'object') {
                     $('#select-movie').append(`
                     <option> ${movieTitle} </option>
                     `)
@@ -149,7 +161,11 @@ function editMovie() {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
-            getMoviesDB()
+            clearMoviesDB();
+            clearFormValues();
+            getMoviesDB();
+            clearDropDown()
+            createDropdown();
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -157,6 +173,34 @@ function editMovie() {
 }
 
 
+// function getMoviesDB() {
+//
+//     fetch(moviesUrl)
+//         .then(response => response.json())
+//         .then(data => {
+//
+//             console.log(data)
+//
+//             for (let i = 0; i < (data.length); i++) {
+//                 let movieTitle = fixCase(data[i].title);
+//                 let movieGenre = fixCase(data[i].genre);
+//                 let movieYear = data[i].year;
+//                 let moviePlot = data[i].plot;
+//                 let movieRating = starRating(data[i].rating);
+//                 if(data[i].title !== undefined) {
+//                     $('#moviesList').append(`
+//                     <li> ${movieTitle} </li>
+//                     <li> ${movieGenre} </li>
+//                     <li> ${movieYear} </li>
+//                     <li> ${moviePlot} </li>
+//                     <li> ${movieRating} </li>
+//                     `)
+//                 }
+//             }
+//         });
+// }
+
+// Testing bootstrap card
 function getMoviesDB() {
 
     fetch(moviesUrl)
@@ -171,15 +215,42 @@ function getMoviesDB() {
                 let movieYear = data[i].year;
                 let moviePlot = data[i].plot;
                 let movieRating = starRating(data[i].rating);
+                let movieActor = data[i].actors;
                 if(data[i].title !== undefined) {
-                    $('#moviesList').append(`
-                    <li> ${movieTitle} </li>
-                    <li> ${movieGenre} </li>
-                    <li> ${movieYear} </li>
-                    <li> ${moviePlot} </li>
-                    <li> ${movieRating} </li>
+                    $('#movieCard').append(`
+                    <div class="card text-center bg-primary text-light border-warning col-6">
+<!--                    <div class="row g-0">-->
+<!--                    <div class="col-sm-4">-->
+<!--                        <img src="..." class="card-img-top" alt="...">-->
+                        <div class="card-body">
+                            <h5 class="card-title"> ${movieTitle} </h5>
+                            <p class="card-text"> ${movieGenre} </p>
+                            <p class="card-text"> ${movieYear} </p>
+                            <p class="card-text"> ${moviePlot} </p>
+                            <p class="card-text"> ${movieRating} </p>
+                        </div>
+<!--                        </div>-->
+<!--                        </div>-->
+                    </div>
                     `)
                 }
             }
         });
+}
+
+function clearMoviesDB() {
+    $('#movieCard').html('');
+}
+
+function clearFormValues() {
+    document.getElementById('delete-input').value='';
+    document.getElementById('add-title').value='';
+    document.getElementById('add-genre').value='';
+    document.getElementById('add-year').value='';
+    document.getElementById('add-plot').value='';
+    document.getElementById('add-rating').value='';
+}
+
+function clearDropDown() {
+    $('#select-movie option').remove();
 }
