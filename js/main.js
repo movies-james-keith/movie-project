@@ -5,8 +5,7 @@ let moviesUrl = "https://receptive-different-edam.glitch.me/movies";
 
 getMoviesDB(moviesUrl);
 createDropdown();
-
-
+createDeleteDropdown()
 
 
 $('#add-submit').click(function (e) {
@@ -17,8 +16,7 @@ $('#add-submit').click(function (e) {
 
 $('#delete-submit').click(function (e) {
     e.preventDefault();
-    let item = $('#delete-input').val();
-    deleteMovie(item);
+    deleteMovie();
 });
 
 $('#edit-submit').click(function (e) {
@@ -47,10 +45,10 @@ function fixCase(string) {
             names.push(names[i].charAt(0).toUpperCase() + names[i].slice(1).toLowerCase());
             fixedNames = fixedNames + names.pop() + ' ';
         }
-        console.log(fixedNames);
         return fixedNames;
     }
 }
+
 
 function starRating (num) {
     let stars = '';
@@ -63,25 +61,25 @@ function starRating (num) {
     return stars;
 }
 
-function deleteMovie(item) {
 
-    fetch(moviesUrl + '/' + item, {
-        method: 'delete'
-    })
-        .then(response => response.json());
-        fetch(moviesUrl + '/' + item, {
+function deleteMovie() {
+    let deleteId = $('#delete-movie option:selected').attr('id');
+
+        fetch(moviesUrl + '/' + deleteId, {
             method: 'delete'
         })
-            // .then(response => response.json());
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
                 clearMoviesDB();
                 clearFormValues();
-                getMoviesDB()
-                clearDropDown()
-                createDropdown();});
+                getMoviesDB();
+                clearDropDown();
+                clearDeleteDropDown();
+                createDropdown();
+                createDeleteDropdown();});
 }
+
 
 function addMovie() {
     let data = { title:  $('#add-title').val(),
@@ -91,7 +89,7 @@ function addMovie() {
         rating: $('#add-rating').val()
     };
     fetch(moviesUrl, {
-        method: 'POST', // or 'PUT'
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -103,8 +101,10 @@ function addMovie() {
             clearMoviesDB();
             clearFormValues();
             getMoviesDB();
-            clearDropDown()
+            clearDropDown();
+            clearDeleteDropDown();
             createDropdown();
+            createDeleteDropdown();
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -112,24 +112,42 @@ function addMovie() {
     createDropdown();
 }
 
+
 function createDropdown() {
     fetch(moviesUrl)
         .then(response => response.json())
         .then(data => {
 
-            console.log(data)
-
             for (let i = 0; i < (data.length); i++) {
                 let movieTitle = data[i].title;
-              
+                let movieId = data[i].id;
                 if(data[i].title !== undefined && typeof(data[i].title) !== 'object') {
                     $('#select-movie').append(`
-                    <option> ${movieTitle} </option>                    
+                    <option class="${movieTitle} newoption" id="${movieId}"> ${movieTitle} </option>                    
                     `)
                 }
             }
         });
 }
+
+
+function createDeleteDropdown() {
+    fetch(moviesUrl)
+        .then(response => response.json())
+        .then(data => {
+
+            for (let i = 0; i < (data.length); i++) {
+                let movieTitle = data[i].title;
+                let movieId = data[i].id;
+                if(data[i].title !== undefined && typeof(data[i].title) !== 'object') {
+                    $('#delete-movie').append(`
+                    <option class="${movieTitle} newoption" id="${movieId}"> ${movieTitle} </option>                    
+                    `)
+                }
+            }
+        });
+}
+
 
 function populateEditForm(title) {
     fetch(moviesUrl)
@@ -153,15 +171,20 @@ function populateEditForm(title) {
         });
 }
 
+
 function editMovie() {
-    let data = { title:  $('#edit-title').val(),
+    let data = {
+        title:  $('#edit-title').val(),
         genre:  $('#edit-genre').val(),
         year:   $('#edit-year').val(),
         plot:   $('#edit-plot').val(),
         rating: $('#edit-rating').val()
     };
-    fetch(moviesUrl, {
-        method: 'PUT', // or 'PUT'
+
+    let dataId = $('#select-movie option:selected').attr('id');
+
+    fetch(moviesUrl + '/' + dataId, {
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -173,8 +196,10 @@ function editMovie() {
             clearMoviesDB();
             clearFormValues();
             getMoviesDB();
-            clearDropDown()
+            clearDropDown();
+            clearDeleteDropDown();
             createDropdown();
+            createDeleteDropdown();
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -182,34 +207,6 @@ function editMovie() {
 }
 
 
-// function getMoviesDB() {
-//
-//     fetch(moviesUrl)
-//         .then(response => response.json())
-//         .then(data => {
-//
-//             console.log(data)
-//
-//             for (let i = 0; i < (data.length); i++) {
-//                 let movieTitle = fixCase(data[i].title);
-//                 let movieGenre = fixCase(data[i].genre);
-//                 let movieYear = data[i].year;
-//                 let moviePlot = data[i].plot;
-//                 let movieRating = starRating(data[i].rating);
-//                 if(data[i].title !== undefined) {
-//                     $('#moviesList').append(`
-//                     <li> ${movieTitle} </li>
-//                     <li> ${movieGenre} </li>
-//                     <li> ${movieYear} </li>
-//                     <li> ${moviePlot} </li>
-//                     <li> ${movieRating} </li>
-//                     `)
-//                 }
-//             }
-//         });
-// }
-
-// Testing bootstrap card
 function getMoviesDB() {
 
     fetch(moviesUrl)
@@ -224,22 +221,17 @@ function getMoviesDB() {
                 let movieYear = data[i].year;
                 let moviePlot = data[i].plot;
                 let movieRating = starRating(data[i].rating);
-                let movieActor = data[i].actors;
+                let movieId = data[i].id;
                 if(data[i].title !== undefined) {
                     $('#movieCard').append(`
                     <div class="card text-center bg-primary text-light border-warning col-6">
-<!--                    <div class="row g-0">-->
-<!--                    <div class="col-sm-4">-->
-<!--                        <img src="..." class="card-img-top" alt="...">-->
-                        <div class="card-body">
+                        <div class="card-body" id="${movieId}">
                             <h5 class="card-title"> ${movieTitle} </h5>
                             <p class="card-text"> ${movieGenre} </p>
                             <p class="card-text"> ${movieYear} </p>
                             <p class="card-text"> ${moviePlot} </p>
                             <p class="card-text"> ${movieRating} </p>
                         </div>
-<!--                        </div>-->
-<!--                        </div>-->
                     </div>
                     `)
                 }
@@ -247,12 +239,13 @@ function getMoviesDB() {
         });
 }
 
+
 function clearMoviesDB() {
     $('#movieCard').html('');
 }
 
+
 function clearFormValues() {
-    document.getElementById('delete-input').value='';
     document.getElementById('add-title').value='';
     document.getElementById('add-genre').value='';
     document.getElementById('add-year').value='';
@@ -260,6 +253,14 @@ function clearFormValues() {
     document.getElementById('add-rating').value='';
 }
 
+
 function clearDropDown() {
-    $('#select-movie option').remove();
+    $('#select-movie .newoption').remove();
 }
+
+
+function clearDeleteDropDown() {
+    $('#delete-movie .newoption').remove();
+}
+
+
