@@ -159,7 +159,7 @@ function populateEditForm(title) {
                 let movieGenre = fixCase(data[i].genre);
                 let movieYear = data[i].year;
                 let moviePlot = data[i].plot;
-                let movieRating = starRating(data[i].rating);
+                let movieRating = data[i].rating;
                 if(data[i].title === title) {
                     $('#edit-title').val(`${movieTitle}`)
                     $('#edit-genre').val(`${movieGenre}`)
