@@ -59,3 +59,9 @@ html, body {
     height: 25vh;
     width: 18vh;
 }
+
+#delete-movie {
+    text-alighn: left;
+    overflow: hidden;
+    width: 100%;
+}

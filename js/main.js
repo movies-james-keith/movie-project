@@ -16,7 +16,13 @@ $('#add-submit').click(function (e) {
 
 $('#delete-submit').click(function (e) {
     e.preventDefault();
-    deleteMovie();
+    let response = confirm("Sure are you to delete this movie?");
+    if (response == true) {
+        alert("Deleted this movie has been!");
+        deleteMovie();
+    }else{
+        alert("Die another day this movie shall!");
+    }
 });
 
 $('#edit-submit').click(function (e) {
