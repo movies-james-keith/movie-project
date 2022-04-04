@@ -269,7 +269,7 @@ function getMoviesDB() {
                 let moviePoster = data[i].poster;
                 if(data[i].title !== undefined) {
                     $('#movieCard').append(`
-                    <div class="card text-center bg-primary text-light border-warning col-5 col-lg-4 my-2">
+                    <div class="card text-center bg-primary text-light border-warning col-xs-12 col-sm-5 col-lg-4 my-2">
                         <div class="card-body" id="${movieId}">
                             <img src="${moviePoster}" alt="${movieTitle}" class="poster mb-2">
                             <h5 class="card-title"> ${movieTitle} </h5>
