@@ -56,7 +56,7 @@ html, body {
 }
 
 .poster {
-    height: 25vh;
+    max-height: 25vh;
     width: 18vh;
 }
 

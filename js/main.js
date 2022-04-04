@@ -275,8 +275,9 @@ function getMoviesDB() {
                             <h5 class="card-title"> ${movieTitle} </h5>
                             <p class="card-text"> ${movieGenre} </p>
                             <p class="card-text"> ${movieYear} </p>
-                            <p class="card-text"> ${moviePlot} </p>
                             <p class="card-text"> ${movieRating} </p>
+                            <p class="card-text"> ${moviePlot} </p>
+                            
                         </div>
                     </div>
                     `)
@@ -335,8 +336,9 @@ function matchTitleFromSearch(input) {
                             <h5 class="card-title"> ${movieTitle} </h5>
                             <p class="card-text"> ${movieGenre} </p>
                             <p class="card-text"> ${movieYear} </p>
-                            <p class="card-text"> ${moviePlot} </p>
                             <p class="card-text"> ${movieRating} </p>
+                            <p class="card-text"> ${moviePlot} </p>
+                            
                         </div>
                     </div>
                     `)
