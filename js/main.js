@@ -67,6 +67,7 @@ $('#search-delete-submit').click(function(e){
     e.preventDefault();
     clearMoviesDB();
     getMoviesDB();
+    document.getElementById('search-input').value='';
 });
 
 function fixCase(string) {
