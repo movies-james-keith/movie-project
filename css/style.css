@@ -27,6 +27,10 @@ html, body {
     width: 10vh;
 }
 
+#movieCard {
+    width: 95%;
+}
+
 .navbar-style {
     background-color: #b1a7a6;
     font-family: 'Red Hat Mono', monospace;

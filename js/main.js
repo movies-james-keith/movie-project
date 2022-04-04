@@ -5,7 +5,7 @@ let moviesUrl = "https://receptive-different-edam.glitch.me/movies";
 
 getMoviesDB(moviesUrl);
 createDropdown();
-createDeleteDropdown()
+createDeleteDropdown();
 
 
 $('#add-submit').click(function (e) {
@@ -35,9 +35,42 @@ $('#select-movie').change(function(e){
     populateEditForm(title);
 });
 
+// // Search on Keyup with no submit button
+// $('#search-input').keyup(function(e){
+//     e.preventDefault();
+//     let input = $(this).val()
+//     console.log(input);
+//     if(input !== '') {
+//         clearMoviesDB();
+//         matchTitleFromSearch(input);
+//     }else {
+//         clearMoviesDB();
+//         getMoviesDB();
+//     }
+// });
+
+//  Search on submit button only
+$('#search-input-submit').click(function(e){
+    e.preventDefault();
+    let input = $('#search-input').val()
+    console.log(input);
+    if(input !== '') {
+        clearMoviesDB();
+        matchTitleFromSearch(input);
+    }else {
+        clearMoviesDB();
+        getMoviesDB();
+    }
+});
+
+$('#search-delete-submit').click(function(e){
+    e.preventDefault();
+    clearMoviesDB();
+    getMoviesDB();
+});
 
 function fixCase(string) {
-    if (typeof (string) === 'string' && string !== '') {
+    if (typeof (string) === 'string' && string !== ' ') {
         let names = [];
         let fixedNames = '';
         names = string.split(" ");
@@ -229,7 +262,7 @@ function getMoviesDB() {
                 let moviePoster = data[i].poster;
                 if(data[i].title !== undefined) {
                     $('#movieCard').append(`
-                    <div class="card text-center bg-primary text-light border-warning col-5 my-2">
+                    <div class="card text-center bg-primary text-light border-warning col-5 col-lg-4 my-2">
                         <div class="card-body" id="${movieId}">
                             <img src="${moviePoster}" alt="${movieTitle}" class="poster mb-2">
                             <h5 class="card-title"> ${movieTitle} </h5>
@@ -240,6 +273,8 @@ function getMoviesDB() {
                         </div>
                     </div>
                     `)
+                }else {
+                    clearMoviesDB();
                 }
             }
         });
@@ -269,5 +304,41 @@ function clearDropDown() {
 function clearDeleteDropDown() {
     $('#delete-movie .newoption').remove();
 }
+
+
+function matchTitleFromSearch(input) {
+    fetch(moviesUrl)
+        .then(response => response.json())
+        .then(data => {
+
+                    for (let i = 0; i < (data.length); i++) {
+                        let movieTitle = fixCase(data[i].title);
+                        let movieGenre = fixCase(data[i].genre);
+                        let movieYear = data[i].year;
+                        let moviePlot = data[i].plot;
+                        let movieRating = starRating(data[i].rating);
+                        let movieId = data[i].id;
+                        let moviePoster = data[i].poster;
+                        if(movieTitle.toLowerCase().includes(input)) {
+                            console.log(movieTitle);
+                            $('#movieCard').append(`
+                    <div class="card text-center bg-primary text-light border-warning col-5 col-lg-4 my-2">
+                        <div class="card-body" id="${movieId}">
+                            <img src="${moviePoster}" alt="${movieTitle}" class="poster mb-2">
+                            <h5 class="card-title"> ${movieTitle} </h5>
+                            <p class="card-text"> ${movieGenre} </p>
+                            <p class="card-text"> ${movieYear} </p>
+                            <p class="card-text"> ${moviePlot} </p>
+                            <p class="card-text"> ${movieRating} </p>
+                        </div>
+                    </div>
+                    `)
+                        }
+                    }
+
+        });
+}
+
+
 
 
