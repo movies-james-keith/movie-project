@@ -50,3 +50,8 @@ html, body {
 .bg-primary {
     background-color: #A4161A!important;
 }
+
+.poster {
+    height: 25vh;
+    width: 18vh;
+}

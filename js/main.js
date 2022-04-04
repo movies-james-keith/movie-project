@@ -82,11 +82,12 @@ function deleteMovie() {
 
 
 function addMovie() {
-    let data = { title:  $('#add-title').val(),
-        genre:  $('#add-genre').val(),
+    let data = { title:  $('#add-title').val().trim(),
+        genre:  $('#add-genre').val().trim(),
         year:   $('#add-year').val(),
         plot:   $('#add-plot').val(),
-        rating: $('#add-rating').val()
+        rating: $('#add-rating').val(),
+        poster: $('#add-poster').val()
     };
     fetch(moviesUrl, {
         method: 'POST',
@@ -109,7 +110,6 @@ function addMovie() {
         .catch((error) => {
             console.error('Error:', error);
         });
-    createDropdown();
 }
 
 
@@ -122,7 +122,7 @@ function createDropdown() {
                 let movieTitle = data[i].title;
                 let movieId = data[i].id;
 
-                if(movieTitle !== undefined && typeof(movieTitle) !== 'object') {
+                if(movieTitle !== undefined) {
                     $('#select-movie').append(`
                     <option class="${movieTitle} newoption" id="${movieId}"> ${movieTitle} </option>                    
                     `)
@@ -140,7 +140,7 @@ function createDeleteDropdown() {
             for (let i = 0; i < (data.length); i++) {
                 let movieTitle = data[i].title;
                 let movieId = data[i].id;
-                if(data[i].title !== undefined && typeof(data[i].title) !== 'object') {
+                if(data[i].title !== undefined) {
                     $('#delete-movie').append(`
                     <option class="${movieTitle} newoption" id="${movieId}"> ${movieTitle} </option>                    
                     `)
@@ -161,12 +161,14 @@ function populateEditForm(title) {
                 let movieYear = data[i].year;
                 let moviePlot = data[i].plot;
                 let movieRating = data[i].rating;
+                let moviePoster = data[i].poster;
                 if(data[i].title === title) {
                     $('#edit-title').val(`${movieTitle}`)
                     $('#edit-genre').val(`${movieGenre}`)
                     $('#edit-year').val(`${movieYear}`)
                     $('#edit-plot').val(`${moviePlot}`)
                     $('#edit-rating').val(`${movieRating}`)
+                    $('#edit-poster').val(`${moviePoster}`)
                 }
             }
         });
@@ -175,11 +177,12 @@ function populateEditForm(title) {
 
 function editMovie() {
     let data = {
-        title:  $('#edit-title').val(),
-        genre:  $('#edit-genre').val(),
+        title:  $('#edit-title').val().trim(),
+        genre:  $('#edit-genre').val().trim(),
         year:   $('#edit-year').val(),
         plot:   $('#edit-plot').val(),
-        rating: $('#edit-rating').val()
+        rating: $('#edit-rating').val(),
+        poster: $('#edit-poster').val()
     };
 
     let dataId = $('#select-movie option:selected').attr('id');
@@ -223,10 +226,12 @@ function getMoviesDB() {
                 let moviePlot = data[i].plot;
                 let movieRating = starRating(data[i].rating);
                 let movieId = data[i].id;
+                let moviePoster = data[i].poster;
                 if(data[i].title !== undefined) {
                     $('#movieCard').append(`
                     <div class="card text-center bg-primary text-light border-warning col-5 my-2">
                         <div class="card-body" id="${movieId}">
+                            <img src="${moviePoster}" alt="${movieTitle}" class="poster mb-2">
                             <h5 class="card-title"> ${movieTitle} </h5>
                             <p class="card-text"> ${movieGenre} </p>
                             <p class="card-text"> ${movieYear} </p>
@@ -252,6 +257,7 @@ function clearFormValues() {
     document.getElementById('add-year').value='';
     document.getElementById('add-plot').value='';
     document.getElementById('add-rating').value='';
+    document.getElementById('add-poster').value='';
 }
 
 
