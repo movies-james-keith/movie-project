@@ -53,6 +53,24 @@ html, body {
 
 .bg-primary {
     background-color: #A4161A!important;
+    /*background-color: #d3d3d3 !important;*/
+    color: #660708;
+}
+
+.btn-primary {
+    background-color: #d3d3d3;
+    color: #660708;
+}
+
+.btn-dark {
+    color: #660708 ;
+    /*background-color: #f5f3f4;*/
+    background-color: #d3d3d3;
+}
+
+.btn-danger {
+    background-color: #d3d3d3;
+    color: #660708;
 }
 
 .poster {
@@ -62,7 +80,7 @@ html, body {
 }
 
 #delete-movie {
-    text-alighn: left;
+    text-align: left;
     overflow: hidden;
     width: 100%;
 }

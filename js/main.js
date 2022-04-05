@@ -327,7 +327,8 @@ function matchTitleFromSearch(input) {
                         let movieRating = starRating(data[i].rating);
                         let movieId = data[i].id;
                         let moviePoster = data[i].poster;
-                        if(movieTitle.toLowerCase().includes(input)) {
+                        if(movieTitle.toLowerCase().includes(input.toLowerCase()) ||
+                            movieGenre.toLowerCase().includes(input.toLowerCase())) {
                             console.log(movieTitle);
                             $('#movieCard').append(`
                     <div class="card text-center bg-primary text-light border-warning col-5 col-lg-4 my-2">
