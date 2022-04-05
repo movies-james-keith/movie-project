@@ -58,6 +58,7 @@ html, body {
 .poster {
     max-height: 25vh;
     width: 18vh;
+    border: white solid 3px;
 }
 
 #delete-movie {
