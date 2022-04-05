@@ -59,7 +59,7 @@ $('#select-movie').change(function(e){
 $('#search-input-submit').click(function(e){
     e.preventDefault();
     let input = $('#search-input').val()
-    console.log(input);
+    // console.log(input);
     if(input !== '') {
         clearMoviesDB();
         matchTitleFromSearch(input);
@@ -194,7 +194,7 @@ function populateEditForm(title) {
     fetch(moviesUrl)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            // console.log(data)
             for (let i = 0; i < (data.length); i++) {
                 let movieTitle = fixCase(data[i].title);
                 let movieGenre = fixCase(data[i].genre);
@@ -257,7 +257,7 @@ function getMoviesDB() {
         .then(response => response.json())
         .then(data => {
 
-            console.log(data)
+            // console.log(data)
 
             for (let i = 0; i < (data.length); i++) {
                 let movieTitle = fixCase(data[i].title);
@@ -329,7 +329,7 @@ function matchTitleFromSearch(input) {
                         let moviePoster = data[i].poster;
                         if(movieTitle.toLowerCase().includes(input.toLowerCase()) ||
                             movieGenre.toLowerCase().includes(input.toLowerCase())) {
-                            console.log(movieTitle);
+                            // console.log(movieTitle);
                             $('#movieCard').append(`
                     <div class="card text-center bg-primary text-light border-warning col-5 col-lg-4 my-2">
                         <div class="card-body" id="${movieId}">
