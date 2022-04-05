@@ -53,6 +53,23 @@ html, body {
 
 .bg-primary {
     background-color: #A4161A!important;
+    /*color: #660708 !important;*/
+}
+
+.btn-dark {
+    color: #660708 ;
+    /*background-color: #f5f3f4;*/
+    background-color: #d3d3d3;
+}
+
+.btn-primary {
+    background-color: #d3d3d3;
+    color: #660708;
+}
+
+.btn-danger {
+    background-color: #d3d3d3;
+    color: #660708;
 }
 
 .poster {
@@ -65,3 +82,6 @@ html, body {
     overflow: hidden;
     width: 100%;
 }
+
+
+let stars = ['😠','😦','😑','😀','😍'];

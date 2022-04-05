@@ -92,10 +92,11 @@ function fixCase(string) {
 
 function starRating (num) {
     let stars = '';
+    let emoji = ['😠','😦','😑','😀','😍'];
     if (num == '1' || num == '2' || num == '3' || num == '4' || num == '5') {
 
     for (let i = 1; i <= num; i++) {
-        stars += '⭐️';
+        stars +=  emoji[i];
     }
 }
     return stars;
