@@ -69,6 +69,18 @@ $('#search-input-submit').click(function(e){
     }
 });
 
+$(document).ready(function() {
+    $("#search-input").keyup(function(event) {
+        if (event.which === 13) {
+            $("#search-input-submit").click();
+        }
+    });
+
+    $("#search-input-submit").click(function() {
+        // alert('clicked!');
+    })
+});
+
 $('#search-delete-submit').click(function(e){
     e.preventDefault();
     clearMoviesDB();
